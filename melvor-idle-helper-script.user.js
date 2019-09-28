@@ -26,7 +26,7 @@ smithInterval
 (function() {
     'use strict';
 
-    const waitForPage = setInterval(()=>{
+    const waitForPage = setInterval(() => {
         if (!document.querySelectorAll(`[href*="smeltBar(0)"]`)[0]){
             return;
         }
@@ -36,7 +36,7 @@ smithInterval
     }, 100);
 })();
 
-const addCalcToEl = (el, xp, xp_ps, gp, gp_ps)=>{
+const addCalcToEl = (el, xp_ps, gp_ps) => {
     if (!el || !el.appendChild) return;
 
     // create our helper elements
@@ -57,10 +57,9 @@ const addCalcToEl = (el, xp, xp_ps, gp, gp_ps)=>{
     el.appendChild(helper_container);
 }
 
-const woodcuttingCalc = ()=>{
-    console.log('woodcutting calc');
+const woodcuttingCalc = () => {
     // Woodcutting
-    trees.forEach(tree=>{
+    trees.forEach(tree => {
         const itemName = tree.type;
         const seconds = (tree.interval / 1000);
         const xp = tree.xp;
@@ -68,12 +67,14 @@ const woodcuttingCalc = ()=>{
         const gp = items.find(item=>new RegExp('^' + itemName, 'i').test(item.name)).sellsFor;
         const gp_ps = +(gp / seconds).toFixed(2);
 
-        const tree_container = document.getElementById(`woodcutting_tree_${itemName}`).getElementsByClassName('block-content')[0];
-        addCalcToEl(tree_container, xp, xp_ps, gp, gp_ps);
+        const tree_container = document.getElementById(`woodcutting_tree_${itemName}`)
+        if (!tree_container) return;
+        const tree_el = tree_container.getElementsByClassName('block-content')[0];
+        addCalcToEl(tree_el, xp_ps, gp_ps);
     });
 }
 
-const smeltingCalc = ()=>{
+const smeltingCalc = () => {
     const seconds = smeltInterval / 1000;
     smithingBars.forEach((bar, i)=>{
         const item = items.find(item=>new RegExp('^' + bar + ' bar', 'i').test(item.name));
@@ -85,7 +86,6 @@ const smeltingCalc = ()=>{
         const smelt_container = document.querySelectorAll(`[href*="smeltBar(${i})"]`)[0];
         if (!smelt_container) return;
         const smelt_el = smelt_container.getElementsByClassName('block-content')[0];
-        console.log(smelt_el, xp, xp_ps, gp, gp_ps);
-        addCalcToEl(smelt_el, xp, xp_ps, gp, gp_ps);
+        addCalcToEl(smelt_el, xp_ps, gp_ps);
     });
 }
