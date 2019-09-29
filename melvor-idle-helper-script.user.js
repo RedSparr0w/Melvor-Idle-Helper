@@ -33,15 +33,19 @@ thievingNPC
         if (!document.querySelectorAll(`[href*="smeltBar(0)"]`)[0]){
             return;
         }
+        // Page is loaded
         clearInterval(waitForPage);
+
+        // Functions that can be run now
         woodcuttingCalc();
         smeltingCalc();
         thievingCalc();
+
         // Enable the popovers
         $('.js-popover').popover({
-            container: "body",
-            animation: !1,
-            trigger: "hover focus",
+            container: 'body',
+            animation: false,
+            trigger: 'hover focus',
         });
     }, 100);
 })();
@@ -66,11 +70,12 @@ const addCalcToEl = (el, xp_ps, gp_ps = false) => {
         helper_container.appendChild(gp_ps_el);
     }
 
+    // Needs these classes for the text to show correctly
+    el.classList.add('ribbon', 'ribbon-light', 'ribbon-bookmark', 'ribbon-left');
     el.appendChild(helper_container);
 }
 
 const woodcuttingCalc = () => {
-    // Woodcutting
     trees.forEach(tree => {
         const itemName = tree.type;
         const seconds = (tree.interval / 1000);
@@ -87,6 +92,7 @@ const woodcuttingCalc = () => {
 }
 
 const smeltingCalc = () => {
+    // Always takes the same amount of time
     const seconds = smeltInterval / 1000;
     smithingBars.forEach((bar, i) => {
         const item = items.find(item=>new RegExp('^' + bar + ' bar', 'i').test(item.name));
@@ -95,7 +101,7 @@ const smeltingCalc = () => {
         const gp = item.sellsFor;
         const gp_ps = +(gp / seconds).toFixed(2);
 
-        const smelt_container = document.querySelectorAll(`[href*="smeltBar(${i})"]`)[0];
+        const smelt_container = document.getElementById(`smithing-furnace-bar-${i}`);
         if (!smelt_container) return;
         const smelt_el = smelt_container.getElementsByClassName('block-content')[0];
         addCalcToEl(smelt_el, xp_ps, gp_ps);
@@ -103,6 +109,7 @@ const smeltingCalc = () => {
 }
 
 const thievingCalc = () => {
+    // Always takes the same amount of time
     const seconds = baseThievingInterval / 1000;
     thievingNPC.forEach((npc, id) => {
         const xp_ps = +(npc.xp / seconds).toFixed(2);
