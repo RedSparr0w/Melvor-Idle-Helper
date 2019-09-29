@@ -29,6 +29,6 @@ Helper script for https://melvoridle.com/
  - [ ] Cooking
  - [ ] Mining
  - [x] Smelting
- - [ ] Smithing
+ - [x] Smithing
  - [x] Thieving
  - [ ] Farming

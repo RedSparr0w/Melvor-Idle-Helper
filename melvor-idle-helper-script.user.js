@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Melvor Idle Helper
 // @namespace    https://github.com/RedSparr0w/Melvor-Idle-Helper
-// @version      0.0.2
+// @version      0.0.3
 // @description  Help figure out what you want to focus on skilling
 // @license      MIT
 // @author       RedSparr0w
@@ -40,6 +40,9 @@ thievingNPC
         woodcuttingCalc();
         smeltingCalc();
         thievingCalc();
+
+        // Add our event listeners
+        [...document.querySelectorAll('[onclick^="loadAnvil"]')].forEach(el=>el.addEventListener('click', smithingCalc));
 
         // Enable the popovers
         $('.js-popover').popover({
@@ -105,6 +108,22 @@ const smeltingCalc = () => {
         if (!smelt_container) return;
         const smelt_el = smelt_container.getElementsByClassName('block-content')[0];
         addCalcToEl(smelt_el, xp_ps, gp_ps);
+    });
+}
+
+const smithingCalc = () => {
+    // Always takes the same amount of time
+    const seconds = smithInterval / 1000;
+    items.filter(item=>item.smithingXP && !/bar$/i.test(item.name)).forEach((item, i) => {
+        const xp = item.smithingXP;
+        const xp_ps = +(xp / seconds).toFixed(2);
+        const gp = item.sellsFor;
+        const gp_ps = +(gp / seconds).toFixed(2);
+
+        const smith_container = document.getElementById(`smithing-anvil-item-${item.id}`);
+        if (!smith_container) return;
+        const smith_el = smith_container.getElementsByClassName('block-content')[0];
+        addCalcToEl(smith_el, xp_ps, gp_ps);
     });
 }
 
