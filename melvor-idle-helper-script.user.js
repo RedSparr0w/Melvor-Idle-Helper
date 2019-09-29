@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Melvor Idle Helper
 // @namespace    https://github.com/RedSparr0w/Melvor-Idle-Helper
-// @version      0.0.4
+// @version      0.1.0
 // @description  Help figure out what you want to focus on skilling
 // @license      MIT
 // @author       RedSparr0w
@@ -43,6 +43,11 @@ thievingNPC
 
         // Add our event listeners
         [...document.querySelectorAll('[onclick^="loadAnvil"]')].forEach(el=>el.addEventListener('click', smithingCalc));
+
+        // Run these functions every 500ms
+        let runInterval = setInterval(() => {
+            farmingTick();
+        }, 500)
 
         // Enable the popovers
         $('.js-popover').popover({
@@ -154,4 +159,39 @@ const thievingCalc = () => {
         npc_el_data.placement = 'bottom';
         npc_el_data.content = popoutText.join('<br/>');
     });
+}
+
+const farmingTick = () => {
+  const now = Date.now();
+    farmingAreas.forEach((area, area_id) => {
+        area.patches.forEach((patch, patch_id) => {
+            if (!patch.timePlanted) return;
+            // Minimum of 0 for timeRemaining
+            const timeRemaining = new Date(Math.max(0, patch.timePlanted + (items[patch.seedID].timeToGrow * 1000) - now));
+            const timeLeftStr = `${(timeRemaining.getUTCHours()+'').padStart(2,0)}:${(timeRemaining.getUTCMinutes()+'').padStart(2,0)}:${(timeRemaining.getUTCSeconds()+'').padStart(2,0)}`;
+            updateFarmingPatchTimer(area_id, patch_id, timeLeftStr);
+        });
+    });
+}
+
+const updateFarmingPatchTimer = (area_id, patch_id, timeLeftStr) => {
+    let timer_el = document.getElementById(`farming-timer-${area_id}-${patch_id}`);
+    if (!timer_el) {
+        const patch_el = document.getElementById(`farming-patch-${area_id}-${patch_id}`).getElementsByClassName('block-content')[0];
+
+        // create our helper elements
+        const helper_container = document.createElement('div');
+        helper_container.className = 'font-size-sm font-w600 text-right text-uppercase text-muted';
+        helper_container.style = 'position: absolute; right: 6px; top: 8px;';
+
+        // Create our timer element
+        timer_el = document.createElement('small');
+        timer_el.id = `farming-timer-${area_id}-${patch_id}`;
+        helper_container.appendChild(timer_el);
+
+        // Needs these classes for the text to show correctly
+        patch_el.classList.add('ribbon', 'ribbon-light', 'ribbon-bookmark', 'ribbon-left');
+        patch_el.appendChild(helper_container);
+    }
+    timer_el.innerText = timeLeftStr;
 }
