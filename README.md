@@ -30,5 +30,5 @@ Helper script for https://melvoridle.com/
  - [ ] Mining
  - [x] Smelting
  - [ ] Smithing
- - [ ] Thieving
+ - [x] Thieving
  - [ ] Farming

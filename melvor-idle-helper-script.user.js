@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Melvor Idle Helper
 // @namespace    https://github.com/RedSparr0w/Melvor-Idle-Helper
-// @version      0.0.1
+// @version      0.0.2
 // @description  Help figure out what you want to focus on skilling
 // @license      MIT
 // @author       RedSparr0w
@@ -14,6 +14,7 @@
 /*
 globals
 // Define global variables here
+$
 CONSTANTS
 items
 trees
@@ -21,6 +22,8 @@ smeltInterval
 smithingBars
 smithingBarID
 smithInterval
+baseThievingInterval
+thievingNPC
 */
 
 (function() {
@@ -33,10 +36,17 @@ smithInterval
         clearInterval(waitForPage);
         woodcuttingCalc();
         smeltingCalc();
+        thievingCalc();
+        // Enable the popovers
+        $('.js-popover').popover({
+            container: "body",
+            animation: !1,
+            trigger: "hover focus",
+        });
     }, 100);
 })();
 
-const addCalcToEl = (el, xp_ps, gp_ps) => {
+const addCalcToEl = (el, xp_ps, gp_ps = false) => {
     if (!el || !el.appendChild) return;
 
     // create our helper elements
@@ -46,14 +56,16 @@ const addCalcToEl = (el, xp_ps, gp_ps) => {
 
     const xp_ps_el = document.createElement('small');
     xp_ps_el.innerText = xp_ps + ' XP/s';
-    const gp_ps_el = document.createElement('small');
-    gp_ps_el.innerText = gp_ps + ' GP/s';
-
-    // add the elements to our container
     helper_container.appendChild(xp_ps_el);
-    helper_container.appendChild(document.createElement('br'));
-    helper_container.appendChild(gp_ps_el);
-    // add to the page
+
+    // If we are calculating gp/s aswell then include this
+    if (gp_ps) {
+        const gp_ps_el = document.createElement('small');
+        gp_ps_el.innerText = gp_ps + ' GP/s';
+        helper_container.appendChild(document.createElement('br'));
+        helper_container.appendChild(gp_ps_el);
+    }
+
     el.appendChild(helper_container);
 }
 
@@ -76,7 +88,7 @@ const woodcuttingCalc = () => {
 
 const smeltingCalc = () => {
     const seconds = smeltInterval / 1000;
-    smithingBars.forEach((bar, i)=>{
+    smithingBars.forEach((bar, i) => {
         const item = items.find(item=>new RegExp('^' + bar + ' bar', 'i').test(item.name));
         const xp = item.smithingXP;
         const xp_ps = +(xp / seconds).toFixed(2);
@@ -87,5 +99,33 @@ const smeltingCalc = () => {
         if (!smelt_container) return;
         const smelt_el = smelt_container.getElementsByClassName('block-content')[0];
         addCalcToEl(smelt_el, xp_ps, gp_ps);
+    });
+}
+
+const thievingCalc = () => {
+    const seconds = baseThievingInterval / 1000;
+    thievingNPC.forEach((npc, id) => {
+        const xp_ps = +(npc.xp / seconds).toFixed(2);
+
+        // Get the loottable text
+        let popoutText = [`<img src='http://melvoridle.com/assets/media/main/coins.svg' height='20px'> ${npc.maxCoins} coins (max)`];
+        const totalWeight = npc.lootTable.reduce((a,b)=>a + b[1], 0);
+        npc.lootTable.forEach(loot => {
+            const item = items[loot[0]];
+            popoutText.push(`<img src='${item.media}' height='20px'> ${item.name} - ${((loot[1] / totalWeight) * 100).toFixed(1)}%`);
+        });
+
+        const npc_el = document.getElementById(`thieving-npc-${id}`).getElementsByClassName('block-content')[0];
+
+        // Add the xp/s amounts
+        addCalcToEl(npc_el, xp_ps);
+
+        // Add the popovers for the loot
+        npc_el.classList.add('js-popover');
+        const npc_el_data = npc_el.dataset;
+        npc_el_data.toggle = 'popover';
+        npc_el_data.html = 'true';
+        npc_el_data.placement = 'bottom';
+        npc_el_data.content = popoutText.join('<br/>');
     });
 }
