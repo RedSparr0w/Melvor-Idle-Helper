@@ -12,9 +12,14 @@ Helper script for https://melvoridle.com/
 - Then install the script via any of these methods:
   - [Install from GitHub](https://raw.githubusercontent.com/RedSparr0w/Melvor-Idle-Helper/master/melvor-idle-helper-script.user.js)
 
-# Screenshot
+# Screenshots
 
-![example image](https://i.imgur.com/haCNvPH.png)
+### Woodcutting
+![woodcutting](https://i.imgur.com/haCNvPH.png)
+### Smithing
+![smithing](https://i.imgur.com/5CSXraL.png)
+### Thieving
+![thieving](https://i.imgur.com/2nC7K7L.png)
 
 # TO DO List
 

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Melvor Idle Helper
 // @namespace    https://github.com/RedSparr0w/Melvor-Idle-Helper
-// @version      0.0.3
+// @version      0.0.4
 // @description  Help figure out what you want to focus on skilling
 // @license      MIT
 // @author       RedSparr0w
@@ -83,9 +83,9 @@ const woodcuttingCalc = () => {
         const itemName = tree.type;
         const seconds = (tree.interval / 1000);
         const xp = tree.xp;
-        const xp_ps = +(xp / seconds).toFixed(2);
+        const xp_ps = +(xp / seconds).toFixed(1);
         const gp = items.find(item=>new RegExp('^' + itemName, 'i').test(item.name)).sellsFor;
-        const gp_ps = +(gp / seconds).toFixed(2);
+        const gp_ps = +(gp / seconds).toFixed(1);
 
         const tree_container = document.getElementById(`woodcutting_tree_${itemName}`)
         if (!tree_container) return;
@@ -100,9 +100,9 @@ const smeltingCalc = () => {
     smithingBars.forEach((bar, i) => {
         const item = items.find(item=>new RegExp('^' + bar + ' bar', 'i').test(item.name));
         const xp = item.smithingXP;
-        const xp_ps = +(xp / seconds).toFixed(2);
+        const xp_ps = +(xp / seconds).toFixed(1);
         const gp = item.sellsFor;
-        const gp_ps = +(gp / seconds).toFixed(2);
+        const gp_ps = +(gp / seconds).toFixed(1);
 
         const smelt_container = document.getElementById(`smithing-furnace-bar-${i}`);
         if (!smelt_container) return;
@@ -116,9 +116,9 @@ const smithingCalc = () => {
     const seconds = smithInterval / 1000;
     items.filter(item=>item.smithingXP && !/bar$/i.test(item.name)).forEach((item, i) => {
         const xp = item.smithingXP;
-        const xp_ps = +(xp / seconds).toFixed(2);
+        const xp_ps = +(xp / seconds).toFixed(1);
         const gp = item.sellsFor;
-        const gp_ps = +(gp / seconds).toFixed(2);
+        const gp_ps = +(gp / seconds).toFixed(1);
 
         const smith_container = document.getElementById(`smithing-anvil-item-${item.id}`);
         if (!smith_container) return;
@@ -131,7 +131,7 @@ const thievingCalc = () => {
     // Always takes the same amount of time
     const seconds = baseThievingInterval / 1000;
     thievingNPC.forEach((npc, id) => {
-        const xp_ps = +(npc.xp / seconds).toFixed(2);
+        const xp_ps = +(npc.xp / seconds).toFixed(1);
 
         // Get the loottable text
         let popoutText = [`<img src='http://melvoridle.com/assets/media/main/coins.svg' height='20px'> ${npc.maxCoins} coins (max)`];
