@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Melvor Idle Helper
 // @namespace    https://github.com/RedSparr0w/Melvor-Idle-Helper
-// @version      0.1.1
+// @version      0.1.2
 // @description  Help figure out what you want to focus on skilling
 // @license      MIT
 // @author       RedSparr0w
@@ -24,13 +24,15 @@ smithingBarID
 smithInterval
 baseThievingInterval
 thievingNPC
+farmingAreas
 */
 
 (function() {
     'use strict';
 
     const waitForPage = setInterval(() => {
-        if (!document.getElementById(`farming-patch-0-0`)){
+        const changeLog = document.getElementById('changelog-body-container');
+        if (!changeLog || !changeLog.innerText){
             return;
         }
         // Page is loaded
@@ -177,7 +179,9 @@ const farmingTick = () => {
 const updateFarmingPatchTimer = (area_id, patch_id, timeLeftStr) => {
     let timer_el = document.getElementById(`farming-timer-${area_id}-${patch_id}`);
     if (!timer_el) {
-        const patch_el = document.getElementById(`farming-patch-${area_id}-${patch_id}`).getElementsByClassName('block-content')[0];
+        let patch_el = document.getElementById(`farming-patch-${area_id}-${patch_id}`)
+        if (!patch_el) return;
+        patch_el = patch_el.getElementsByClassName('block-content')[0];
 
         // create our helper elements
         const helper_container = document.createElement('div');
