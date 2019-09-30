@@ -44,7 +44,7 @@ farmingAreas
         thievingCalc();
 
         // Add our event listeners
-        [...document.querySelectorAll('[onclick^="loadAnvil"]')].forEach(el=>el.addEventListener('click', smithingCalc));
+        [...document.getElementById('smithing-bar-selection').getElementsByTagName('button')].forEach(el=>el.addEventListener('click', smithingCalc));
 
         // Run these functions every 500ms
         let runInterval = setInterval(() => {
