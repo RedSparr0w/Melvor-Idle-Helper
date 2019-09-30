@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Melvor Idle Helper
 // @namespace    https://github.com/RedSparr0w/Melvor-Idle-Helper
-// @version      0.1.0
+// @version      0.1.1
 // @description  Help figure out what you want to focus on skilling
 // @license      MIT
 // @author       RedSparr0w
@@ -30,7 +30,7 @@ thievingNPC
     'use strict';
 
     const waitForPage = setInterval(() => {
-        if (!document.querySelectorAll(`[href*="smeltBar(0)"]`)[0]){
+        if (!document.getElementById(`farming-patch-0-0`)){
             return;
         }
         // Page is loaded
