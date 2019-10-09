@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Melvor Idle Helper
 // @namespace    https://github.com/RedSparr0w/Melvor-Idle-Helper
-// @version      0.1.2
+// @version      0.1.3
 // @description  Help figure out what you want to focus on skilling
 // @license      MIT
 // @author       RedSparr0w
@@ -18,6 +18,8 @@ $
 CONSTANTS
 items
 trees
+baseMiningInterval
+miningData
 smeltInterval
 smithingBars
 smithingBarID
@@ -40,6 +42,7 @@ farmingAreas
 
         // Functions that can be run now
         woodcuttingCalc();
+        miningCalc();
         smeltingCalc();
         thievingCalc();
 
@@ -98,6 +101,23 @@ const woodcuttingCalc = () => {
         if (!tree_container) return;
         const tree_el = tree_container.getElementsByClassName('block-content')[0];
         addCalcToEl(tree_el, xp_ps, gp_ps);
+    });
+}
+
+const miningCalc = () => {
+    // Always takes the same amount of time
+    const seconds = baseMiningInterval / 1000;
+    miningData.forEach((ore, i) => {
+        const item = items[ore.ore];
+        const xp = item.miningXP;
+        const xp_ps = +(xp / seconds).toFixed(1);
+        const gp = item.sellsFor;
+        const gp_ps = +(gp / seconds).toFixed(1);
+
+        const mine_container = document.getElementById(`mining-ore-${i}`);
+        if (!mine_container) return;
+        const mine_el = mine_container.getElementsByClassName('block-content')[0];
+        addCalcToEl(mine_el, xp_ps, gp_ps);
     });
 }
 
