@@ -3,6 +3,11 @@ Helper script for https://melvoridle.com/
 
 # Installation
 
+## Browser Extension
+[![Chrome web store](https://img.shields.io/chrome-web-store/v/oohpcmhalnghhalafmmikpjcmmdnlelb?color=4285F4&logo=google-chrome&style=flat-square)](https://chrome.google.com/webstore/detail/melvor-idle-helper/oohpcmhalnghhalafmmikpjcmmdnlelb)<br/>
+[![Mozilla Firefox](https://img.shields.io/amo/v/melvor-idle-helper?color=FF9400&logo=mozilla-firefox&style=flat-square)](#melvor-idle-helper) _**(WIP)**_
+
+## Install as a UserScript
 - First, you need a userscript manager. Options include:
   - [Violentmonkey for Firefox](https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/)
   - [Violentmonkey for Chrome](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag)
