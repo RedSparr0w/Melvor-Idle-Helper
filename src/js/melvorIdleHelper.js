@@ -29,23 +29,53 @@
     }, 200);
 })();
 
+
+let helperSettings = {
+  ...{
+    autoEat: true,
+    autoLoot: true,
+  },
+  ...JSON.parse(localStorage.melvorIdleHelper || '{}')
+};
+helperSettings = new Proxy(helperSettings,
+{
+  set: function(obj, prop, value) {
+    // The default behavior to store the value
+    obj[prop] = value;
+
+    // Save our Settings
+    localStorage.melvorIdleHelper = JSON.stringify(obj);
+
+    // Indicate success
+    return true;
+  }
+});
+
 const addSettings = () => {
     $('#page-container').append(`
       <div class="modal" id="modal-melvor-idle-helper" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
-                <div class="block block-themed block-transparent mb-0">
+                <div class="block block-themed block-transparent">
                     <div class="block-header bg-primary-dark">
-                        <h3 class="block-title">Melvor Idle Helper Settings</h3>
+                        <h3 class="block-title">Melvor Idle Helper</h3>
                         <div class="block-options">
                             <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                                 <i class="fa fa-fw fa-times"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="block-content font-size-sm">
+                    <div class="block-content font-size-sm m-1">
                         <div class="row">
                             <div class="col-sm-12">
+                                <div class="custom-control custom-switch mb-1">
+                                    <input type="checkbox" class="custom-control-input" id="auto-eat-enabled" name="auto-eat-enabled" onchange="helperSettings.autoEat = this.checked" ${helperSettings.autoEat ? "checked" : ""}>
+                                    <label class="custom-control-label" for="auto-eat-enabled">Auto Eat</label>
+                                </div>
+                                <div class="custom-control custom-switch mb-1">
+                                    <input type="checkbox" class="custom-control-input" id="auto-loot-enabled" name="auto-loot-enabled" onchange="helperSettings.autoLoot = this.checked" ${helperSettings.autoLoot ? "checked" : ""}>
+                                    <label class="custom-control-label" for="auto-loot-enabled">Auto Collect Loot</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -53,6 +83,7 @@ const addSettings = () => {
             </div>
         </div>
     </div>`);
+
     $('[href*="changePage(3)"]').after(`
       <a class="nav-main-link" data-toggle="modal" href="#modal-melvor-idle-helper">
         <img class="nav-img" src="assets/media/bank/gloves_smithing.svg">
