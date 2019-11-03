@@ -2,6 +2,11 @@ script = document.createElement('script');
 script.src = chrome.extension.getURL('src/js/melvorIdleHelper.js');
 document.body.appendChild(script);
 
+/*
+ * DISABLE THE CLOUD SAVE STUFF FOR NOW
+ * needs a lot more work to correctly detect when to overwrite your data
+ *
+ 
 // Load latest save
 chrome.storage.sync.get(null, function(all){
 	Object.keys(all).forEach(key=>{
@@ -16,3 +21,4 @@ setInterval(()=>{
 		console.debug('[Melvor Idle Helper] Saved Game');
 	});
 }, 5e3);
+*/

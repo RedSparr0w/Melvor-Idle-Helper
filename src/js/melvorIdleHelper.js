@@ -1,35 +1,3 @@
-// ==UserScript==
-// @name         Melvor Idle Helper
-// @namespace    https://github.com/RedSparr0w/Melvor-Idle-Helper
-// @version      0.1.4
-// @description  Help figure out what you want to focus on skilling
-// @license      MIT
-// @author       RedSparr0w
-// @match        https://melvoridle.com/
-// @match        http://melvoridle.com/
-// @grant        none
-// @run-at       document-idle
-// @updateURL    https://raw.githubusercontent.com/RedSparr0w/Melvor-Idle-Helper/master/src/js/melvor-idle-helper-script.user.js
-// @downloadURL  https://raw.githubusercontent.com/RedSparr0w/Melvor-Idle-Helper/master/src/js/melvor-idle-helper-script.user.js
-// ==/UserScript==
-/*
-globals
-// Define global variables here
-$
-CONSTANTS
-items
-trees
-baseMiningInterval
-miningData
-smeltInterval
-smithingBars
-smithingBarID
-smithInterval
-baseThievingInterval
-thievingNPC
-farmingAreas
-*/
-
 (function() {
     'use strict';
     const waitForPage = setInterval(() => {
@@ -43,11 +11,7 @@ farmingAreas
         // Functions that can be run now
         woodcuttingCalc();
         miningCalc();
-        smeltingCalc();
         thievingCalc();
-
-        // Add our event listeners
-        [...document.getElementById('smithing-bar-selection').getElementsByTagName('button')].forEach(el=>el.addEventListener('click', smithingCalc));
 
         // Run these functions every 500ms
         let runInterval = setInterval(() => {
@@ -60,10 +24,10 @@ farmingAreas
             animation: false,
             trigger: 'hover focus',
         });
-    }, 100);
+    }, 200);
 })();
 
-const addCalcToEl = (el, xp_ps, gp_ps = false) => {
+const addCalcToEl = (el, data = []) => {
     if (!el || !el.appendChild) return;
 
     // create our helper elements
@@ -71,17 +35,13 @@ const addCalcToEl = (el, xp_ps, gp_ps = false) => {
     helper_container.className = 'font-size-sm font-w600 text-right text-uppercase text-muted';
     helper_container.style = 'position: absolute; right: 6px; top: 8px;';
 
-    const xp_ps_el = document.createElement('small');
-    xp_ps_el.innerText = xp_ps + ' XP/s';
-    helper_container.appendChild(xp_ps_el);
-
-    // If we are calculating gp/s aswell then include this
-    if (gp_ps) {
-        const gp_ps_el = document.createElement('small');
-        gp_ps_el.innerText = gp_ps + ' GP/s';
-        helper_container.appendChild(document.createElement('br'));
-        helper_container.appendChild(gp_ps_el);
-    }
+    data.forEach((dat, i)=>{
+      // Add line break if not first element
+      if (i > 0) helper_container.appendChild(document.createElement('br'));
+      const el = document.createElement('small');
+      el.innerText = dat;
+      helper_container.appendChild(el);
+    });
 
     // Needs these classes for the text to show correctly
     el.classList.add('ribbon', 'ribbon-light', 'ribbon-bookmark', 'ribbon-left');
@@ -100,7 +60,7 @@ const woodcuttingCalc = () => {
         const tree_container = document.getElementById(`woodcutting_tree_${itemName}`)
         if (!tree_container) return;
         const tree_el = tree_container.getElementsByClassName('block-content')[0];
-        addCalcToEl(tree_el, xp_ps, gp_ps);
+        addCalcToEl(tree_el, [xp_ps + ' XP/s', gp_ps + ' GP/s']);
     });
 }
 
@@ -117,40 +77,7 @@ const miningCalc = () => {
         const mine_container = document.getElementById(`mining-ore-${i}`);
         if (!mine_container) return;
         const mine_el = mine_container.getElementsByClassName('block-content')[0];
-        addCalcToEl(mine_el, xp_ps, gp_ps);
-    });
-}
-
-const smeltingCalc = () => {
-    // Always takes the same amount of time
-    const seconds = smeltInterval / 1000;
-    smithingBars.forEach((bar, i) => {
-        const item = items.find(item=>new RegExp('^' + bar + ' bar', 'i').test(item.name));
-        const xp = item.smithingXP;
-        const xp_ps = +(xp / seconds).toFixed(1);
-        const gp = item.sellsFor;
-        const gp_ps = +(gp / seconds).toFixed(1);
-
-        const smelt_container = document.getElementById(`smithing-furnace-bar-${i}`);
-        if (!smelt_container) return;
-        const smelt_el = smelt_container.getElementsByClassName('block-content')[0];
-        addCalcToEl(smelt_el, xp_ps, gp_ps);
-    });
-}
-
-const smithingCalc = () => {
-    // Always takes the same amount of time
-    const seconds = smithInterval / 1000;
-    items.filter(item=>item.smithingXP && !/bar$/i.test(item.name)).forEach((item, i) => {
-        const xp = item.smithingXP;
-        const xp_ps = +(xp / seconds).toFixed(1);
-        const gp = item.sellsFor;
-        const gp_ps = +(gp / seconds).toFixed(1);
-
-        const smith_container = document.getElementById(`smithing-anvil-item-${item.id}`);
-        if (!smith_container) return;
-        const smith_el = smith_container.getElementsByClassName('block-content')[0];
-        addCalcToEl(smith_el, xp_ps, gp_ps);
+        addCalcToEl(mine_el, [xp_ps + ' XP/s', gp_ps + ' GP/s']);
     });
 }
 
@@ -171,7 +98,7 @@ const thievingCalc = () => {
         const npc_el = document.getElementById(`thieving-npc-${id}`).getElementsByClassName('block-content')[0];
 
         // Add the xp/s amounts
-        addCalcToEl(npc_el, xp_ps);
+        addCalcToEl(npc_el, [xp_ps + ' XP/s']);
 
         // Add the popovers for the loot
         npc_el.classList.add('js-popover');

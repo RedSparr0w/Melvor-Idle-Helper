@@ -38,7 +38,7 @@ Helper script for https://melvoridle.com/
  - [ ] Firemaking
  - [ ] Cooking
  - [ ] Mining
- - [x] Smelting
- - [x] Smithing
+ - [ ] Smelting
+ - [ ] Smithing
  - [x] Thieving
  - [x] Farming
