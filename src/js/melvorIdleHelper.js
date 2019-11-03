@@ -9,6 +9,7 @@
         clearInterval(waitForPage);
 
         // Functions that can be run now
+        addButtons();
         woodcuttingCalc();
         miningCalc();
         thievingCalc();
@@ -26,6 +27,14 @@
         });
     }, 200);
 })();
+
+const addButtons = () => {
+  // Farming
+  $('#farming-area-container').before(`<div class="col-12">
+      <button class="btn btn-info m-1" onclick="compostAll();">Compost All</button>
+      <button class="btn btn-info m-1" onclick="harvestAll();">Harvest All</button>
+    </div>`);
+}
 
 const addCalcToEl = (el, data = []) => {
     if (!el || !el.appendChild) return;
@@ -110,6 +119,8 @@ const thievingCalc = () => {
     });
 }
 
+// Farming
+
 const farmingTick = () => {
   const now = Date.now();
     farmingAreas.forEach((area, area_id) => {
@@ -117,7 +128,7 @@ const farmingTick = () => {
             if (!patch.timePlanted) return;
             // Minimum of 0 for timeRemaining
             const timeRemaining = new Date(Math.max(0, patch.timePlanted + (items[patch.seedID].timeToGrow * 1000) - now));
-            const timeLeftStr = `${(timeRemaining.getUTCHours()+'').padStart(2,0)}:${(timeRemaining.getUTCMinutes()+'').padStart(2,0)}:${(timeRemaining.getUTCSeconds()+'').padStart(2,0)}`;
+            const timeLeftStr = timeRemaining <= 0 ? '' : `${(timeRemaining.getUTCHours()+'').padStart(2,0)}:${(timeRemaining.getUTCMinutes()+'').padStart(2,0)}:${(timeRemaining.getUTCSeconds()+'').padStart(2,0)}`;
             updateFarmingPatchTimer(area_id, patch_id, timeLeftStr);
         });
     });
@@ -145,4 +156,12 @@ const updateFarmingPatchTimer = (area_id, patch_id, timeLeftStr) => {
         patch_el.appendChild(helper_container);
     }
     timer_el.innerText = timeLeftStr;
+}
+
+const harvestAll = () => {
+   [...document.querySelectorAll(`[onclick^=harvestSeed`)].forEach(el=>el.click());
+}
+
+const compostAll = () => {
+   [...document.querySelectorAll(`[onclick^=addCompost`)].forEach(el=>el.click());
 }
