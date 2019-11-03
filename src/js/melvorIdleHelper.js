@@ -18,6 +18,8 @@
         // Run these functions every 500ms
         let runInterval = setInterval(() => {
             farmingTick();
+            autoEat();
+            autoLoot();
         }, 500)
 
         // Enable the popovers
@@ -31,24 +33,25 @@
 
 
 let helperSettings = {
+  // Default settings
   ...{
     autoEat: true,
     autoLoot: true,
   },
+  // Users saved settings
   ...JSON.parse(localStorage.melvorIdleHelper || '{}')
 };
-helperSettings = new Proxy(helperSettings,
-{
-  set: function(obj, prop, value) {
-    // The default behavior to store the value
-    obj[prop] = value;
+helperSettings = new Proxy(helperSettings, {
+    set: function(obj, prop, value) {
+        // The default behavior to store the value
+        obj[prop] = value;
 
-    // Save our Settings
-    localStorage.melvorIdleHelper = JSON.stringify(obj);
+        // Save our Settings
+        localStorage.melvorIdleHelper = JSON.stringify(obj);
 
-    // Indicate success
-    return true;
-  }
+        // Indicate success
+        return true;
+    }
 });
 
 const addSettings = () => {
@@ -97,6 +100,23 @@ const addButtons = () => {
         <button class="btn btn-info m-1" onclick="compostAll();" title="Compost all plots in current farming area">Compost All</button>
         <button class="btn btn-info m-1" onclick="harvestAll();" title="Harvest all plots in current farming area">Harvest All</button>
       </div>`);
+}
+
+// Automated Functions
+const autoEat = () => {
+    if (!helperSettings.autoEat) return;
+    if (!equippedFood[currentCombatFood].qty)
+        if (equippedFood.some(food=>food.qty))
+            currentCombatFood = equippedFood.findIndex(food=>food.qty);
+        else
+            return;
+    if (combatData.player.hitpoints <= (skillLevel[CONSTANTS.skill.Hitpoints] - items[equippedFood[currentCombatFood].itemID].healsFor))
+        eatFood();
+}
+
+const autoLoot = () => {
+    if (helperSettings.autoLoot && droppedLoot.length)
+        document.getElementById('loot-0').click();
 }
 
 const addCalcToEl = (el, data = []) => {
