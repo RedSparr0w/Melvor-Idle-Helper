@@ -9,6 +9,7 @@
         clearInterval(waitForPage);
 
         // Functions that can be run now
+        addSettings();
         addButtons();
         woodcuttingCalc();
         miningCalc();
@@ -28,12 +29,13 @@
     }, 200);
 })();
 
-const addButtons = () => {
-  // Farming
-  $('#farming-area-container').before(`<div class="col-12">
-      <button class="btn btn-info m-1" onclick="compostAll();" title="Compost all plots in current farming area">Compost All</button>
-      <button class="btn btn-info m-1" onclick="harvestAll();" title="Harvest all plots in current farming area">Harvest All</button>
     </div>`);
+const addButtons = () => {
+    // Farming
+    $('#farming-area-container').before(`<div class="col-12">
+        <button class="btn btn-info m-1" onclick="compostAll();" title="Compost all plots in current farming area">Compost All</button>
+        <button class="btn btn-info m-1" onclick="harvestAll();" title="Harvest all plots in current farming area">Harvest All</button>
+      </div>`);
 }
 
 const addCalcToEl = (el, data = []) => {
