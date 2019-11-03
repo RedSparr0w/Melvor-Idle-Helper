@@ -45,11 +45,11 @@ const addCalcToEl = (el, data = []) => {
     helper_container.style = 'position: absolute; right: 6px; top: 8px;';
 
     data.forEach((dat, i)=>{
-      // Add line break if not first element
-      if (i > 0) helper_container.appendChild(document.createElement('br'));
-      const el = document.createElement('small');
-      el.innerText = dat;
-      helper_container.appendChild(el);
+        // Add line break if not first element
+        if (i > 0) helper_container.appendChild(document.createElement('br'));
+        const el = document.createElement('small');
+        el.innerText = dat;
+        helper_container.appendChild(el);
     });
 
     // Needs these classes for the text to show correctly
@@ -122,20 +122,22 @@ const thievingCalc = () => {
 // Farming
 
 const farmingTick = () => {
-  const now = Date.now();
-    farmingAreas.forEach((area, area_id) => {
-        area.patches.forEach((patch, patch_id) => {
-            if (!patch.timePlanted) return;
-            // Minimum of 0 for timeRemaining
-            const timeRemaining = new Date(Math.max(0, patch.timePlanted + (items[patch.seedID].timeToGrow * 1000) - now));
-            const timeLeftStr = timeRemaining <= 0 ? '' : `${(timeRemaining.getUTCHours()+'').padStart(2,0)}:${(timeRemaining.getUTCMinutes()+'').padStart(2,0)}:${(timeRemaining.getUTCSeconds()+'').padStart(2,0)}`;
-            updateFarmingPatchTimer(area_id, patch_id, timeLeftStr);
-        });
+    if (currentFarmingArea === null) return;
+    const now = Date.now();
+    const area_id = currentFarmingArea;
+    const area = farmingAreas[area_id];
+    area.patches.forEach((patch, patch_id) => {
+        if (!patch.timePlanted) return;
+        const timeRemaining = new Date(patch.timePlanted + (items[patch.seedID].timeToGrow * 1000) - now);
+        // If no time remains, leave it empty
+        const timeLeftStr = timeRemaining <= 0 ? '' : `${(timeRemaining.getUTCHours()+'').padStart(2,0)}:${(timeRemaining.getUTCMinutes()+'').padStart(2,0)}:${(timeRemaining.getUTCSeconds()+'').padStart(2,0)}`;
+        updateFarmingPatchTimer(area_id, patch_id, timeLeftStr);
     });
 }
 
 const updateFarmingPatchTimer = (area_id, patch_id, timeLeftStr) => {
     let timer_el = document.getElementById(`farming-timer-${area_id}-${patch_id}`);
+    // If there is no timer element, create it
     if (!timer_el) {
         let patch_el = document.getElementById(`farming-patch-${area_id}-${patch_id}`)
         if (!patch_el) return;
@@ -159,9 +161,14 @@ const updateFarmingPatchTimer = (area_id, patch_id, timeLeftStr) => {
 }
 
 const harvestAll = () => {
-   [...document.querySelectorAll(`[onclick^=harvestSeed`)].forEach(el=>el.click());
+    // This will only harvest plots on the current page
+    [...document.querySelectorAll(`[onclick^=harvestSeed`)].forEach(el=>el.click());
 }
 
 const compostAll = () => {
-   [...document.querySelectorAll(`[onclick^=addCompost`)].forEach(el=>el.click());
+    // This will only compost plots on the current page
+    [...document.querySelectorAll(`[onclick^=addCompost`)].forEach(el=>{
+        for(i = 0; i < 5; i++)
+            el.click();
+    });
 }
