@@ -31,8 +31,8 @@
 const addButtons = () => {
   // Farming
   $('#farming-area-container').before(`<div class="col-12">
-      <button class="btn btn-info m-1" onclick="compostAll();">Compost All</button>
-      <button class="btn btn-info m-1" onclick="harvestAll();">Harvest All</button>
+      <button class="btn btn-info m-1" onclick="compostAll();" title="Compost all plots in current farming area">Compost All</button>
+      <button class="btn btn-info m-1" onclick="harvestAll();" title="Harvest all plots in current farming area">Harvest All</button>
     </div>`);
 }
 
