@@ -29,7 +29,37 @@
     }, 200);
 })();
 
+const addSettings = () => {
+    $('#page-container').append(`
+      <div class="modal" id="modal-melvor-idle-helper" tabindex="-1" role="dialog" aria-labelledby="modal-block-normal" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary-dark">
+                        <h3 class="block-title">Melvor Idle Helper Settings</h3>
+                        <div class="block-options">
+                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content font-size-sm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>`);
+    $('[href*="changePage(3)"]').after(`
+      <a class="nav-main-link" data-toggle="modal" href="#modal-melvor-idle-helper">
+        <img class="nav-img" src="assets/media/bank/gloves_smithing.svg">
+        <span class="nav-main-link-name">Helper Settings</span>
+      </a>`)
+}
+
 const addButtons = () => {
     // Farming
     $('#farming-area-container').before(`<div class="col-12">
