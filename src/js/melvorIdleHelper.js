@@ -31,28 +31,27 @@
     }, 200);
 })();
 
+const helperSettings = new Proxy({
+      // Default settings
+      ...{
+        autoEat: true,
+        autoLoot: true,
+      },
+      // Users saved settings
+      ...JSON.parse(localStorage.melvorIdleHelper || '{}')
+    },
+    {
+        set: function(obj, prop, value) {
+            // The default behavior to store the value
+            obj[prop] = value;
 
-let helperSettings = {
-  // Default settings
-  ...{
-    autoEat: true,
-    autoLoot: true,
-  },
-  // Users saved settings
-  ...JSON.parse(localStorage.melvorIdleHelper || '{}')
-};
-helperSettings = new Proxy(helperSettings, {
-    set: function(obj, prop, value) {
-        // The default behavior to store the value
-        obj[prop] = value;
+            // Save our Settings
+            localStorage.melvorIdleHelper = JSON.stringify(obj);
 
-        // Save our Settings
-        localStorage.melvorIdleHelper = JSON.stringify(obj);
-
-        // Indicate success
-        return true;
-    }
-});
+            // Indicate success
+            return true;
+        }
+    });
 
 const addSettings = () => {
     $('#page-container').append(`
