@@ -1,6 +1,6 @@
 {
   "name": "Melvor Idle Helper",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "manifest_version": 2,
   "description": "Add some extra functions to Melvor Idle",
   "homepage_url": "https://melvoridle.com",
@@ -17,11 +17,6 @@
       ],
       "css": [
         "src/inject/inject.css"
-      ]
-    },
-    {
-      "matches": [
-        "*://melvoridle.com/*"
       ],
       "js": [
         "src/inject/inject.js"

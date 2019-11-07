@@ -1,3 +1,43 @@
-/**
- * Place your custom CSS styles here.
- **/
+body.darkMode {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(assets/media/skills/woodcutting/bg_woodcutting.jpg) !important;
+}
+body.darkMode .block,
+body.darkMode .modal-content,
+body.darkMode .bg-white,
+body.darkMode .dropdown-menu {
+  background: #34495e !important;
+}
+body.darkMode .block:active,
+body.darkMode .block:hover {
+  box-shadow: 0 0.375rem 0.55rem #2c3e50 !important;
+}
+body.darkMode .ribbon-box,
+body.darkMode .progress,
+body.darkMode .btn-light,
+body.darkMode .nav-main-link:hover,
+body.darkMode .nav-link:hover,
+body.darkMode .nav-link:focus,
+body.darkMode .dropdown-item:hover,
+body.darkMode .dropdown-item:focus,
+body.darkMode .btn-dual {
+  background: #2c3e50 !important;
+}
+body.darkMode .ribbon-light.ribbon-bookmark.ribbon-left .ribbon-box::before {
+  border-color: #2c3e50;
+  border-right-color: transparent;
+}
+body.darkMode .ribbon-box,
+body.darkMode .block-title,
+body.darkMode .block,
+body.darkMode .text-dark,
+body.darkMode .text-muted,
+body.darkMode .btn,
+body.darkMode .table,
+body.darkMode .modal,
+body.darkMode .nav-main-link,
+body.darkMode .nav-link {
+  color: whitesmoke !important;
+}
+body.darkMode .dropdown-item {
+  color: whitesmoke;
+}

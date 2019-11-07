@@ -1,4 +1,4 @@
-script = document.createElement('script');
+const script = document.createElement('script');
 script.src = chrome.extension.getURL('src/js/melvorIdleHelper.js');
 document.body.appendChild(script);
 
