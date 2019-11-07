@@ -4,6 +4,7 @@ body.darkMode {
 body.darkMode .block,
 body.darkMode .modal-content,
 body.darkMode .bg-white,
+body.darkMode .bg-light,
 body.darkMode .dropdown-menu {
   background: #34495e !important;
 }
