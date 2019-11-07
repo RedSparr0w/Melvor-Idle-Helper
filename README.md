@@ -5,17 +5,7 @@ Helper script for https://melvoridle.com/
 
 ## Browser Extension
 [![Chrome web store](https://img.shields.io/chrome-web-store/v/oohpcmhalnghhalafmmikpjcmmdnlelb?color=4285F4&logo=google-chrome&style=flat-square)](https://chrome.google.com/webstore/detail/melvor-idle-helper/oohpcmhalnghhalafmmikpjcmmdnlelb)<br/>
-[![Mozilla Firefox](https://img.shields.io/amo/v/melvor-idle-helper?color=FF9400&logo=mozilla-firefox&style=flat-square)](#melvor-idle-helper)
-
-## Install as a UserScript
-- First, you need a userscript manager. Options include:
-  - [Violentmonkey for Firefox](https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/)
-  - [Violentmonkey for Chrome](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag)
-  - [Greasemonkey for Firefox](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/)
-  - [Tampermonkey for Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
-
-- Then install the script via any of these methods:
-  - [Install from GitHub](https://raw.githubusercontent.com/RedSparr0w/Melvor-Idle-Helper/master/melvor-idle-helper-script.user.js)
+[![Mozilla Firefox](https://img.shields.io/amo/v/melvor-idle-helper?color=FF9400&logo=mozilla-firefox&style=flat-square)](https://addons.mozilla.org/en-US/firefox/addon/melvor-idle-helper/
 
 # Screenshots
 
@@ -37,8 +27,8 @@ Helper script for https://melvoridle.com/
  - [ ] Fishing
  - [ ] Firemaking
  - [ ] Cooking
- - [ ] Mining
+ - [x] Mining
  - [ ] Smelting
  - [ ] Smithing
  - [x] Thieving
- - [x] Farming
+ - [ ] Farming
