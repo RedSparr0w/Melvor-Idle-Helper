@@ -5,7 +5,7 @@ Helper script for https://melvoridle.com/
 
 ## Browser Extension
 [![Chrome web store](https://img.shields.io/chrome-web-store/v/oohpcmhalnghhalafmmikpjcmmdnlelb?color=4285F4&logo=google-chrome&style=flat-square)](https://chrome.google.com/webstore/detail/melvor-idle-helper/oohpcmhalnghhalafmmikpjcmmdnlelb)<br/>
-[![Mozilla Firefox](https://img.shields.io/amo/v/melvor-idle-helper?color=FF9400&logo=mozilla-firefox&style=flat-square)](#melvor-idle-helper) _**(WIP)**_
+[![Mozilla Firefox](https://img.shields.io/amo/v/melvor-idle-helper?color=FF9400&logo=mozilla-firefox&style=flat-square)](#melvor-idle-helper)
 
 ## Install as a UserScript
 - First, you need a userscript manager. Options include:
