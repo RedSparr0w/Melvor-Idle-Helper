@@ -6,11 +6,11 @@ body.darkMode .modal-content,
 body.darkMode .bg-white,
 body.darkMode .bg-light,
 body.darkMode .dropdown-menu {
-  background: #34495e !important;
+  background: #2c343f !important;
 }
-body.darkMode .block:active,
-body.darkMode .block:hover {
-  box-shadow: 0 0.375rem 0.55rem #2c3e50 !important;
+body.darkMode a.block:active,
+body.darkMode a.block:hover {
+  box-shadow: 0 0.375rem 0.55rem #373e49 !important;
 }
 body.darkMode .ribbon-box,
 body.darkMode .progress,
@@ -21,10 +21,13 @@ body.darkMode .nav-link:focus,
 body.darkMode .dropdown-item:hover,
 body.darkMode .dropdown-item:focus,
 body.darkMode .btn-dual {
-  background: #2c3e50 !important;
+  background: #373e49 !important;
+}
+body.darkMode .border {
+  border: 1px solid #373e49 !important;
 }
 body.darkMode .ribbon-light.ribbon-bookmark.ribbon-left .ribbon-box::before {
-  border-color: #2c3e50;
+  border-color: #373e49;
   border-right-color: transparent;
 }
 body.darkMode .ribbon-box,
