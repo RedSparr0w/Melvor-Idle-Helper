@@ -45,3 +45,6 @@ body.darkMode .nav-link {
 body.darkMode .dropdown-item {
   color: whitesmoke;
 }
+div.content-header {
+  max-width: 100vw !important;
+}
