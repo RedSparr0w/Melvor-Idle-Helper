@@ -66,7 +66,7 @@ const addSettings = () => {
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="block-header bg-primary-dark">
-                    <h3 class="block-title">Melvor Idle Helper</h3>
+                    <h3 class="block-title text-light">Melvor Idle Helper</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
                             <i class="fa fa-fw fa-times"></i>
