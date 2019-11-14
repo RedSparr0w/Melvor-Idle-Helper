@@ -96,7 +96,7 @@ const addSettings = () => {
     </div>`);
 
     $('[href*="changePage(3)"]').after(`
-      <a class="nav-main-link" data-toggle="modal" href="#modal-melvor-idle-helper">
+      <a class="nav-main-link nav-compact" data-toggle="modal" href="#modal-melvor-idle-helper">
         <img class="nav-img" src="assets/media/bank/gloves_smithing.svg">
         <span class="nav-main-link-name">Helper Settings</span>
       </a>`)
