@@ -1,35 +1,32 @@
-(function() {
-    'use strict';
-    const waitForPage = setInterval(() => {
-        const changeLog = document.getElementById('changelog-body-container');
-        if (!changeLog || !changeLog.innerText){
-            return;
-        }
-        // Page is loaded
-        clearInterval(waitForPage);
+const waitForPage = setInterval(() => {
+    const changeLog = document.getElementById('changelog-body-container');
+    if (!changeLog || !changeLog.innerText){
+        return;
+    }
+    // Page is loaded
+    clearInterval(waitForPage);
 
-        // Functions that can be run now
-        addSettings();
-        addButtons();
-        woodcuttingCalc();
-        miningCalc();
-        thievingCalc();
+    // Functions that can be run now
+    addSettings();
+    addButtons();
+    woodcuttingCalc();
+    miningCalc();
+    thievingCalc();
 
-        // Run these functions every 500ms
-        let runInterval = setInterval(() => {
-            farmingTick();
-            autoEat();
-            autoLoot();
-        }, 500)
+    // Run these functions every 500ms
+    let runInterval = setInterval(() => {
+        farmingTick();
+        autoEat();
+        autoLoot();
+    }, 500)
 
-        // Enable the popovers
-        $('.js-popover').popover({
-            container: 'body',
-            animation: false,
-            trigger: 'hover focus',
-        });
-    }, 200);
-})();
+    // Enable the popovers
+    $('.js-popover').popover({
+        container: 'body',
+        animation: false,
+        trigger: 'hover focus',
+    });
+}, 200);
 
 const helperSettings = new Proxy({
       // Default settings
