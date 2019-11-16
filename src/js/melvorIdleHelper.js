@@ -123,8 +123,18 @@ const autoEat = () => {
             currentCombatFood = equippedFood.findIndex(food=>food.qty);
         else
             return;
-    if (combatData.player.hitpoints <= (skillLevel[CONSTANTS.skill.Hitpoints] - items[equippedFood[currentCombatFood].itemID].healsFor))
+
+    const currentHealth = combatData.player.hitpoints;
+    const totalHealth = skillLevel[CONSTANTS.skill.Hitpoints];
+    const enemy = MONSTERS[enemyInCombat];
+    let enemyMaxHit = 1;
+    if (enemy)
+      enemyMaxHit += Math.floor(1.3 + (enemy.strengthLevel / 10) + (enemy.strengthBonus / 80) + (enemy.strengthLevel * enemy.strengthBonus / 640));
+
+    if (currentHealth <= (skillLevel[CONSTANTS.skill.Hitpoints] - items[equippedFood[currentCombatFood].itemID].healsFor) || (currentHealth <= enemyMaxHit && currentHealth < totalHealth)){
         eatFood();
+        autoEat();
+    }
 }
 
 const autoLoot = () => {
