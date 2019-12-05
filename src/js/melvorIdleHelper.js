@@ -33,7 +33,6 @@ const helperSettings = new Proxy({
       ...{
         autoEat: true,
         autoLoot: true,
-        darkMode: true,
       },
       // Users saved settings
       ...JSON.parse(localStorage.melvorIdleHelper || '{}')
@@ -47,9 +46,6 @@ const helperSettings = new Proxy({
             localStorage.melvorIdleHelper = JSON.stringify(obj);
 
             switch(prop){
-                case 'darkMode':
-                    setDarkMode();
-                    break;
             }
 
             // Indicate success
@@ -81,10 +77,6 @@ const addSettings = () => {
                                 <input type="checkbox" class="custom-control-input" id="auto-loot-enabled" name="auto-loot-enabled" onchange="helperSettings.autoLoot = this.checked" ${helperSettings.autoLoot ? "checked" : ""}>
                                 <label class="custom-control-label" for="auto-loot-enabled">Auto Collect Loot</label>
                             </div>
-                            <div class="custom-control custom-switch mb-1">
-                                <input type="checkbox" class="custom-control-input" id="dark-mode-enabled" name="dark-mode-enabled" onchange="helperSettings.darkMode = this.checked" ${helperSettings.darkMode ? "checked" : ""}>
-                                <label class="custom-control-label" for="dark-mode-enabled">Dark mode</label>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,14 +90,6 @@ const addSettings = () => {
         <span class="nav-main-link-name">Helper Settings</span>
       </a>`)
 }
-
-const setDarkMode = () => {
-    if (helperSettings.darkMode)
-        document.body.classList.add('darkMode');
-    else
-        document.body.classList.remove('darkMode');
-}
-setDarkMode();
 
 const addButtons = () => {
     // Farming
